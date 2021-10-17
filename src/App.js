@@ -28,7 +28,7 @@ function App() {
             <Route path ="/about">
                   <Main/>
             </Route> 
-            <Route path ="/chats/:chatsId?">
+            <Route path ="/chats/:chatId?">
                   <Chats/>
             </Route> 
             <Route path ="/">
