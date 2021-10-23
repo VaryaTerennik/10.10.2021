@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addMessage } from '../redux/MessagesSlice'
 import ChatMessages from './ChatMessages'
 import { messageChatSelector } from '../redux/MessagesSlice'
 import { fetchMessages } from '../redux/MessagesSlice'

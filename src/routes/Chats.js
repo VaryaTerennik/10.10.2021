@@ -1,14 +1,10 @@
-import { useState, useEffect } from 'react'
-import { Link, NavLink, useHistory, useParams } from "react-router-dom";
-import{ io } from "socket.io-client"
+import { useEffect } from 'react'
+import { NavLink, useHistory, useParams } from "react-router-dom";
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addChat } from '../redux/ChatList'
-import { addMessage, postMessage } from '../redux/MessagesSlice'
-import { fetchMessages } from '../redux/MessagesSlice'
+import { postMessage } from '../redux/MessagesSlice'
 import { fetchChats } from '../redux/ChatList'
-import ChatMessages from './ChatMessages'
-import { messageChatSelector } from '../redux/MessagesSlice'
 import MessageList from './MessagesList';
 
 function Chats() {

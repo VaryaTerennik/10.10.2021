@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { io } from 'socket.io-client'
 
 
 export const fetchChats = createAsyncThunk(
