@@ -8,8 +8,7 @@ function ChatMessages({onSubmit}) {
     const onFormSubmit = data => {
         onSubmit(data);
     };
-    console.log(onFormSubmit)
-    
+   
         return (
             <form onSubmit = {handleSubmit(onFormSubmit)}>
             <div>
