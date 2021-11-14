@@ -1,0 +1,57 @@
+.Chats {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Chats h1 {
+  padding-left: 100px;
+  width: 100%;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.445);
+}
+
+.TotalChats {
+  padding-left: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ItemChat {
+  display: flex;
+  width: 70%;
+  flex-direction: column;
+  padding: 0px;
+}
+
+.ItemChat Button {
+  font-weight: 500;
+  height: 60px;
+  width: 200px;
+  margin-top: 3px;
+  text-align: center;
+  line-height: 60px;
+}
+
+.ItemChat:first-child {
+  margin-top: 20px;
+}
+
+.MessagesListContainer {
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin-left: 20px;
+  -webkit-box-shadow: 4px 4px 38px 21px rgba(136, 142, 140, 0.2);
+  -moz-box-shadow: 4px 4px 38px 21px rgba(136, 142, 140, 0.2);
+  box-shadow: 4px 4px 38px 21px rgba(136, 142, 140, 0.2);
+}
+
+.LinkChat {
+  text-decoration: none;
+  vertical-align: middle;
+  color: black;
+}
+
+.BtnAddChat {
+  margin-bottom: 50px;
+}

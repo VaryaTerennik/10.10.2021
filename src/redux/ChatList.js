@@ -25,10 +25,25 @@ export const addChat = createAsyncThunk(
   }
 )
 
+export const deleteChat = createAsyncThunk(
+  'users/deleteChat',
+  async ({chatId}) => {
+    const response = await fetch(`https://inordic-messenger-api.herokuapp.com/chats/${chatId}`, {
+      method: "DELETE", 
+      body: JSON.stringify({chatId}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    // const chats = await response.json()
+    // console.log(chatId)
+    return chatId
+  }
+)
+
 const initialState = {
  chats: []
 }
-
 
 
 export const  ChatList = createSlice({
@@ -52,6 +67,10 @@ export const  ChatList = createSlice({
 
     builder.addCase(addChat.fulfilled, (state, action) => {
       state.chats.push(action.payload)
+    })
+
+    builder.addCase(deleteChat.fulfilled, (state, action) => {
+      state.chats.splice((state.chats.findIndex(el => el._id === action.payload)), 1)
     })
   },
 

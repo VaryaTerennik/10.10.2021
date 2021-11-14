@@ -1,0 +1,58 @@
+.MessagesContent {
+  width: 700px;
+  height: 500px;
+}
+
+.MessagesList {
+  overflow-y: scroll;
+  width: 700px;
+  max-height: 300px;
+  margin: 10px 10px 10px 10px;
+  -webkit-box-shadow: 4px 4px 38px 21px rgba(136, 142, 140, 0.2);
+  -moz-box-shadow: 4px 4px 38px 21px rgba(136, 142, 140, 0.2);
+  box-shadow: 4px 4px 38px 21px rgba(136, 142, 140, 0.2);
+  border-radius: 15px;
+}
+
+.TitleChat {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+  font-weight: 700;
+  height: 50px;
+  border-radius: 15px;
+  width: 90%;
+  margin: auto;
+  line-height: 50px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.TitleChat span {
+  margin-right: 20px;
+}
+
+.MessageContainer {
+  width: 100%;
+  margin-left: 5px;
+  display: flex;
+  justify-content: start;
+}
+
+.MessageText {
+  min-height: 45px;
+  border-radius: 5px;
+  min-width: 100px;
+  display: inline-block;
+  margin-bottom: 7px;
+  background-color: #b5deff;
+}
+
+.MessageText small {
+  color: slategray;
+}
+
+.MessageText p {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  color: slategray;
+}
