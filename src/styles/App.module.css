@@ -3,6 +3,8 @@
 .TotalContainer {
   text-align: center;
   min-height: 100vh;
+  background-color: white;
+  z-index: 1300;
 }
 
 .TotalHeader {
@@ -24,7 +26,7 @@
 .NavigationMenu a {
   width: 100%;
   text-decoration: none;
-  color: rgba(0, 0, 0, 0.9);
+  color: #ffff;
   font-size: 18px;
   font-weight: 600;
 }

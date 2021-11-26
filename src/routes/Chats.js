@@ -5,9 +5,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { addChat, deleteChat } from "../redux/ChatList";
 import { fetchChats } from "../redux/ChatList";
 import MessageList from "../components/MessagesList";
-import style from "./Chat.module.css";
+import style from "../styles/Chat.module.css";
 import useSocket from "../hooks/useSocket";
-import Button from "@mui/material/Button";
+import {
+  Button,
+  Card,
+  CardContent,
+  Box,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
 
 function Chats() {
   const { chatId } = useParams();
@@ -30,50 +38,80 @@ function Chats() {
     postMessage(message);
   };
 
-  // if(chatId) {
-  //     const titleChat = chatlist.find(chat => chat._id === chatId)
-  //     console.log(titleChat)
-  //     const titleSelectChat = titleChat._id
-  //     console.log(titleSelectChat)
-  // } else {
-  //     const titleChat = undefined;
-  //     const titleSelectChat = undefined;
-  // }
+  const titleChat = () => {
+    if (chatId) {
+      const selectChat = chatlist.find((chat) => chat._id === chatId);
+      if (selectChat !== undefined) {
+        const titleSelectChat = selectChat.title;
+        return titleSelectChat;
+      } else {
+        const titleSelectChat = undefined;
+        return titleSelectChat;
+      }
+    }
+  };
 
   return (
-    <div className={style.Chats}>
-      <h1>Чаты</h1>
-      <div className={style.TotalChats}>
-        <Button
-          className={style.BtnAddChat}
-          variant="outlined"
-          color="primary"
-          onClick={handleaddChat}
+    <Grid
+      container
+      spacing={2}
+      sx={{ width: "100%", m: "0px", paddingTop: "0px" }}
+    >
+      <Grid item xs={12} sx={{ verticalAlign: "middle", textAlign: "center" }}>
+        <Typography
+          variant="h3"
+          gutterBottom
+          component="h1"
+          sx={{ mt: "0px", mb: "0px", color: "#716F81" }}
         >
-          Добавить чат
-        </Button>
-        <div className={style.ItemChat}>
-          {chatlist.map((chat) => (
-            <Button variant="contained" color="primary" key={chat._id}>
-              <NavLink
-                className={style.LinkChat}
-                activeClassName={style.LinkChatActive}
-                to={`/chats/${chat._id}`}
-              >
-                {chat.title}
-              </NavLink>
+          Чаты
+        </Typography>
+      </Grid>
+      <Grid item xs={3} sx={{ paddingTop: "0px" }}>
+        <Card sx={{ minHeight: "679.5px", ml: "30px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              mt: "30px",
+              width: "100%",
+            }}
+          >
+            <Button
+              variant="outlined"
+              color="primary"
+              sx={{ width: "80%", m: "10px auto" }}
+              onClick={handleaddChat}
+            >
+              Добавить чат
             </Button>
-          ))}
-        </div>
-      </div>
-      <div className={style.MessagesListContainer}>
+            {chatlist.map((chat) => (
+              <Button
+                sx={{ m: "10px auto", width: "80%" }}
+                variant="contained"
+                color="primary"
+                key={chat._id}
+              >
+                <NavLink
+                  className={style.LinkChat}
+                  activeClassName={style.LinkChatActive}
+                  to={`/chats/${chat._id}`}
+                >
+                  {chat.title}
+                </NavLink>
+              </Button>
+            ))}
+          </Box>
+        </Card>
+      </Grid>
+      <Grid item xs={9} sx={{ pt: "0px" }}>
         <MessageList
           chatId={chatId}
-          // titleChat={titleChat}
+          titleChat={titleChat()}
           onSubmit={handleMessageSubmit}
-        ></MessageList>
-      </div>
-    </div>
+        />
+      </Grid>
+    </Grid>
   );
 }
 

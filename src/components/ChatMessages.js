@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import api from "../helpers/api.js";
 import Dropzone from "./Dropzone";
 import { useState } from "react";
-import style from "./ChatMessages.module.css";
+import style from "../styles/ChatMessages.module.css";
 import SendIcon from "@mui/icons-material/Send";
-import Button from "@mui/material/Button";
+import { Button, TextField, Box } from "@mui/material";
 
 function ChatMessages({ onSubmit }) {
   const { register, handleSubmit, setValue, getValues, formState } = useForm({
@@ -101,42 +101,55 @@ function ChatMessages({ onSubmit }) {
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)}>
-      <div>
-        <div>
-          {!loadingProgress && (
-            <Dropzone onFileDrop={handleDropFile}>
-              <textarea
-                className={style.InputTextMessage}
+      <Box>
+        {!loadingProgress && (
+          <Dropzone onFileDrop={handleDropFile}>
+            <Box sx={{ width: "780px", m: "auto" }}>
+              <TextField
+                sx={{
+                  width: "760px",
+                  height: "60px",
+                  m: "auto",
+                  padding: "10px",
+                }}
                 placeholder="Введите ваше сообщение"
                 onKeyPress={handlePressKeyEnter}
                 {...register("text", "latitude", "longitude", {
                   required: true,
                 })}
-              ></textarea>
-              <div className={style.AllButtonForm}>
-                <p>Перетащи сюда картинку</p>
-                {/* <input type="file" onChange={handleUploadFile}/> */}
-                {getValues("imageURL")}
-                <div>
-                  <Button
-                    color="success"
-                    variant="contained"
-                    endIcon={<SendIcon />}
-                    disabled={!formState.isValid}
-                  >
-                    {" "}
-                    Отправить
-                  </Button>
-                  <Button type="button" onClick={handleGetPosition}>
-                    🌍
-                  </Button>
-                </div>
-              </div>
-            </Dropzone>
-          )}
-          {loadingProgress && <div>Загрузка...</div>}
-        </div>
-      </div>
+              ></TextField>
+            </Box>
+            <Box
+              sx={{
+                width: "760px",
+                m: "auto",
+                display: "flex",
+                flexWrap: "nowrap",
+                justifyContent: "space-between",
+                padding: "10px",
+              }}
+              className={style.AllButtonForm}
+            >
+              <p>Перетащи сюда картинку</p>
+              {/* <input type="file" onChange={handleUploadFile}/> */}
+              {getValues("imageURL")}
+              <Box>
+                <Button type="button" onClick={handleGetPosition}>
+                  🌍
+                </Button>
+                <Button
+                  variant="contained"
+                  endIcon={<SendIcon />}
+                  onClick={handleSubmit(onFormSubmit)}
+                >
+                  Отправить
+                </Button>
+              </Box>
+            </Box>
+          </Dropzone>
+        )}
+        {loadingProgress && <div>Загрузка...</div>}
+      </Box>
     </form>
   );
 }

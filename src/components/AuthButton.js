@@ -1,30 +1,29 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import style from "./AuthButton.module.css";
-import Button from "@mui/material/Button";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import style from "../styles/AuthButton.module.css";
+import { Button, Box } from "@mui/material";
 
 function AuthButton() {
   const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
   return (
     <>
       {!isAuthenticated && (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => loginWithRedirect()}
-        >
-          Войти
-        </Button>
+        <Box sx={{ ml: "50px" }}>
+          <Button
+            variant="outlined"
+            color="inherit"
+            onClick={() => loginWithRedirect()}
+          >
+            Войти
+          </Button>
+        </Box>
       )}
 
       {isAuthenticated && (
-        <div className={style.AuthBlock}>
-          <AccountCircleIcon />
-          <div>{user.name}</div>
-          <Button variant="outlined" color="primary" onClick={() => logout()}>
+        <Box sx={{ ml: "50px" }}>
+          <Button variant="outlined" color="inherit" onClick={() => logout()}>
             Выйти
           </Button>
-        </div>
+        </Box>
       )}
     </>
   );
