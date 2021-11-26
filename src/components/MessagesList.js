@@ -75,7 +75,7 @@ function MessageList({ chatId, onSubmit, titleChat }) {
   }
 
   return (
-    <Card sx={{ mr: "5%" }}>
+    <Card sx={{ mr: "5%", minHeight: "679.5px" }}>
       <Box
         sx={{
           width: "100%",

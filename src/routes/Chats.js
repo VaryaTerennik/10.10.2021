@@ -104,7 +104,7 @@ function Chats() {
           </Box>
         </Card>
       </Grid>
-      <Grid item xs={9} sx={{ pt: "0px" }}>
+      <Grid item xs={9} sx={{ pt: "0px", minHeight: "679.5px" }}>
         <MessageList
           chatId={chatId}
           titleChat={titleChat()}
