@@ -1,21 +1,13 @@
 import { useEffect } from "react";
-import { NavLink, useHistory, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addChat, deleteChat } from "../redux/ChatList";
+import { addChat } from "../redux/ChatList";
 import { fetchChats } from "../redux/ChatList";
 import MessageList from "../components/MessagesList";
 import style from "../styles/Chat.module.css";
 import useSocket from "../hooks/useSocket";
-import {
-  Button,
-  Card,
-  CardContent,
-  Box,
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Button, Card, Box, Grid, Typography } from "@mui/material";
 
 function Chats() {
   const { chatId } = useParams();
@@ -23,7 +15,7 @@ function Chats() {
   const dispatch = useDispatch();
   const { postMessage } = useSocket();
 
-  const history = useHistory();
+  // const history = useHistory();
 
   const handleaddChat = () => {
     const title = window.prompt("Введите название чата");

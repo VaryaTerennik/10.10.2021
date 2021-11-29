@@ -130,29 +130,29 @@ function ChatMessages({ onSubmit }) {
     }
   };
 
+  const [position, setPosition] = useState("");
+
   const handleGetPosition = () => {
-    function success(pos) {
-      var crd = pos.coords;
-      setValue("latitude", crd.latitude);
-      setValue("longitude", crd.longitude);
-    }
+    if (position === "") {
+      function success(pos) {
+        var crd = pos.coords;
+        setPosition(crd);
+      }
 
-    function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
-    }
+      function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+      }
 
-    navigator.geolocation.getCurrentPosition(success, error);
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      setPosition("");
+    }
   };
 
-  // const [isCoords, setCoodrs] = useState(false);
-
-  // useEffect(() => {
-  //   if (getValues("latitude") && getValues("longitude")) {
-  //     return setCoodrs[true];
-  //   }
-  // }, [setCoodrs]);
-
-  // console.log(isCoords);
+  useEffect(() => {
+    setValue("latitude", position.latitude);
+    setValue("longitude", position.longitude);
+  }, [position]);
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)}>
@@ -170,7 +170,7 @@ function ChatMessages({ onSubmit }) {
                 padding: "0px",
               }}
               onKeyPress={handlePressKeyEnter}
-              {...register("text", "latitude", "longitude", {
+              {...register("text", {
                 required: true,
               })}
             ></TextField>
@@ -218,14 +218,11 @@ function ChatMessages({ onSubmit }) {
                 type="button"
                 onClick={handleGetPosition}
               >
-                {!(getValues("latitude") && getValues("longitude")) && (
-                  <AddLocationIcon fontSize="large" />
-                )}
-                {getValues("latitude") && getValues("longitude") && (
-                  <LocationOnIcon fontSize="large" />
-                )}
+                {position === "" && <AddLocationIcon fontSize="large" />}
+                {position !== "" && <LocationOnIcon fontSize="large" />}
               </IconButton>
               <Button
+                disabled={!formState.isValid}
                 variant="contained"
                 endIcon={<SendIcon />}
                 onClick={handleSubmit(onFormSubmit)}

@@ -125,6 +125,7 @@ function MessageList({ chatId, onSubmit, titleChat }) {
         className={style.MessagesList}
         sx={{
           overflowY: "scroll",
+          overflowX: "hidden",
           width: "70%",
           minHeight: "450px",
           maxHeight: "450px",
@@ -155,14 +156,7 @@ function MessageList({ chatId, onSubmit, titleChat }) {
         )}
         {messages.map((message) => (
           <Box
-            sx={{
-              width: "100%",
-              ml: "10px",
-              mt: "2px",
-              mb: "10px",
-              display: "flex",
-              justifyContent: "start",
-            }}
+            className={!matchUser(message) ? style.OneClass : style.TwoClass}
           >
             <Box
               sx={{
@@ -240,13 +234,6 @@ function MessageList({ chatId, onSubmit, titleChat }) {
                   </Box>
                 </Box>
               </Box>
-              {/* <Box sx={{ ml: "10px", mb: "10px" }}>
-                {message.imageURL && (
-                  <Box>
-                    <img width="90%" src={message.imageURL} />
-                  </Box>
-                )}
-              </Box> */}
             </Box>
           </Box>
         ))}

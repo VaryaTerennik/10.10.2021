@@ -1,5 +1,4 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import style from "../styles/AuthButton.module.css";
 import { Button, Box } from "@mui/material";
 
 function AuthButton() {

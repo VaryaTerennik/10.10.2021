@@ -1,5 +1,4 @@
 import { BrowserRouter } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Layout from "./components/Layout.js";
 
 import Auth0ProviderWithHistory from "./components/Auth0ProviderWithHistory";
@@ -33,13 +32,11 @@ function App() {
 
   return (
     <Provider store={store}>
-      {/* <ThemeProvider theme={theme}> */}
       <BrowserRouter>
         <Auth0ProviderWithHistory>
           <Layout />
         </Auth0ProviderWithHistory>
       </BrowserRouter>
-      {/* </ThemeProvider> */}
     </Provider>
   );
 }
