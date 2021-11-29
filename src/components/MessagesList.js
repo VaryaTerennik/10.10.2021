@@ -221,7 +221,7 @@ function MessageList({ chatId, onSubmit, titleChat }) {
                       height="250"
                       frameBorder="0"
                       style={{ border: 0 }}
-                      src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyByazDKamXua1tA3FMa7mEP3HZm1wp-Ly8&q=${messages.latitude},${message.longitude}`}
+                      src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyByazDKamXua1tA3FMa7mEP3HZm1wp-Ly8&q=${message.latitude},${message.longitude}`}
                       allowFullScreen
                     />
                   )}
