@@ -27,7 +27,11 @@ function Chats() {
 
   const handleaddChat = () => {
     const title = window.prompt("Введите название чата");
-    dispatch(addChat({ title }));
+    if (title === "") {
+      alert("Пожалуйста, введите название чата");
+    } else {
+      dispatch(addChat({ title }));
+    }
   };
 
   useEffect(() => {
@@ -86,20 +90,20 @@ function Chats() {
               Добавить чат
             </Button>
             {chatlist.map((chat) => (
-              <Button
-                sx={{ m: "10px auto", width: "80%" }}
-                variant="contained"
-                color="primary"
-                key={chat._id}
+              <NavLink
+                className={style.LinkChat}
+                activeClassName={style.LinkChatActive}
+                to={`/chats/${chat._id}`}
               >
-                <NavLink
-                  className={style.LinkChat}
-                  activeClassName={style.LinkChatActive}
-                  to={`/chats/${chat._id}`}
+                <Button
+                  sx={{ display: "block", m: "10px auto", width: "80%" }}
+                  variant="contained"
+                  color="primary"
+                  key={chat._id}
                 >
                   {chat.title}
-                </NavLink>
-              </Button>
+                </Button>
+              </NavLink>
             ))}
           </Box>
         </Card>

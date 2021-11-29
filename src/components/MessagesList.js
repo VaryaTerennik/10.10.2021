@@ -8,15 +8,21 @@ import { fetchMessages } from "../redux/MessagesSlice";
 import { useAuth0 } from "@auth0/auth0-react";
 import style from "../styles/MessagesList.module.css";
 import { Button, Card, CardContent, Typography, Box } from "@mui/material";
+import { NavLink } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function MessageList({ chatId, onSubmit, titleChat }) {
   const { isAuthenticated, user } = useAuth0();
   const messages = useSelector(messageChatSelector(chatId));
-  console.log(messages);
   const dispatch = useDispatch();
   const textMessageRef = useRef(messages);
+
+  const matchUser = (message) => {
+    if (user.name === message.name) {
+      return true;
+    }
+  };
 
   const handleAddMessage = (data) => {
     const newMessage = {
@@ -35,8 +41,8 @@ function MessageList({ chatId, onSubmit, titleChat }) {
   };
 
   const handleDeleteMessage = (event) => {
-    const messageId = event.target.id;
-    console.log(chatId);
+    const messageId = event.currentTarget.id;
+    event.stopPropagation();
     console.log(messageId);
     dispatch(deleteMessage({ chatId, messageId }));
   };
@@ -78,11 +84,12 @@ function MessageList({ chatId, onSubmit, titleChat }) {
     <Card sx={{ mr: "5%", minHeight: "679.5px" }}>
       <Box
         sx={{
-          width: "100%",
+          width: "70%",
+          margin: "auto",
           display: "flex",
           flexDirection: "row",
           padding: "20px",
-          justifyContent: "center",
+          justifyContent: "space-between",
         }}
       >
         {chatId && (
@@ -93,21 +100,29 @@ function MessageList({ chatId, onSubmit, titleChat }) {
               component="div"
               sx={{ color: "#716F81" }}
             >
-              Активный чат: {titleChat}
+              <small>Активный чат: </small>
+              {titleChat}
             </Typography>
-            <Button
-              variant="outlined"
-              startIcon={<DeleteIcon />}
-              sx={{ mr: "20px", ml: "20px" }}
-              onClick={handledeleteChat}
+            <NavLink
+              className={style.LinkDel}
+              sx={{ textDecoration: "none" }}
+              to="/chats"
             >
-              Удалить
-            </Button>
+              <Button
+                variant="outlined"
+                startIcon={<DeleteIcon />}
+                sx={{ ml: "20px", textDecoration: "none" }}
+                onClick={handledeleteChat}
+              >
+                Удалить
+              </Button>
+            </NavLink>
           </>
         )}
       </Box>
 
       <Box
+        className={style.MessagesList}
         sx={{
           overflowY: "scroll",
           width: "70%",
@@ -142,8 +157,9 @@ function MessageList({ chatId, onSubmit, titleChat }) {
           <Box
             sx={{
               width: "100%",
-              ml: "5px",
-              mt: "5px",
+              ml: "10px",
+              mt: "2px",
+              mb: "10px",
               display: "flex",
               justifyContent: "start",
             }}
@@ -153,12 +169,13 @@ function MessageList({ chatId, onSubmit, titleChat }) {
                 minHeight: "45px",
                 borderRadius: "5px",
                 minWidth: "100px",
+                maxWidth: "95%",
                 display: "flex",
                 justifyContent: "space-between",
                 flexWrap: "wrap",
-                backgroundColor: "#FFFF",
+                bgcolor: "#F3F1F5",
               }}
-              key={messages._id}
+              key={message._id}
             >
               <Box
                 sx={{
@@ -172,24 +189,26 @@ function MessageList({ chatId, onSubmit, titleChat }) {
                   variant="caption"
                   display="block"
                   gutterBottom
-                  sx={{ width: "95%" }}
+                  sx={{ width: "95%", ml: "10px" }}
                 >
-                  {messages.name}
+                  {message.name}
                 </Typography>
-                <Button
-                  sx={{
-                    width: "5%",
-                    padding: "0px",
-                    m: "0px",
-                    minWidth: "30px",
-                  }}
-                  variant="text"
-                  color="primary"
-                  size="small"
-                  endIcon={<CloseIcon />}
-                  id={messages._id}
-                  onClick={handleDeleteMessage}
-                ></Button>
+                {matchUser(message) && (
+                  <Button
+                    sx={{
+                      width: "5%",
+                      padding: "0px",
+                      m: "0px",
+                      minWidth: "30px",
+                    }}
+                    variant="text"
+                    color="primary"
+                    size="small"
+                    endIcon={<CloseIcon />}
+                    id={message._id}
+                    onClick={handleDeleteMessage}
+                  ></Button>
+                )}
               </Box>
               <Box
                 sx={{
@@ -199,11 +218,11 @@ function MessageList({ chatId, onSubmit, titleChat }) {
                   justifyContent: "space-between",
                 }}
               >
-                <p>{messages.text}</p>
-                <Box>
-                  {messages.latitude && messages.longitude && (
+                <Box sx={{ ml: "10px", mb: "10px" }}>{message.text}</Box>
+                <Box sx={{ ml: "10px", mb: "10px" }}>
+                  {message.latitude && message.longitude && (
                     <iframe
-                      title={messages._id}
+                      title={message._id}
                       width="450"
                       height="250"
                       frameBorder="0"
@@ -212,15 +231,22 @@ function MessageList({ chatId, onSubmit, titleChat }) {
                       allowFullScreen
                     />
                   )}
+                  <Box sx={{ ml: "10px", mb: "10px", width: "100%" }}>
+                    {message.imageURL && (
+                      <Box>
+                        <img width="90%" src={message.imageURL} />
+                      </Box>
+                    )}
+                  </Box>
                 </Box>
               </Box>
-              <Box>
-                {messages.imageURL && (
+              {/* <Box sx={{ ml: "10px", mb: "10px" }}>
+                {message.imageURL && (
                   <Box>
-                    <img src={message.imageURL} />
+                    <img width="90%" src={message.imageURL} />
                   </Box>
                 )}
-              </Box>
+              </Box> */}
             </Box>
           </Box>
         ))}
