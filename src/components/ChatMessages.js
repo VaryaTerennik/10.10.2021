@@ -134,7 +134,7 @@ function ChatMessages({ onSubmit }) {
     }
   };
 
-  const handleDeleteMessage = () => {
+  const handleDeleteImage = () => {
     if (imageFile !== "") {
       setImageFile("");
     }
@@ -224,25 +224,24 @@ function ChatMessages({ onSubmit }) {
                       </Dropzone>
                     </>
                   )}
-                  <Box sx={{ width: "100%" }}>
-                    <IconButton
-                      color="primary"
-                      aria-label="upload picture"
-                      component="span"
-                      sx={{ m: "auto", width: "100%" }}
-                      onClick={handleDeleteMessage}
-                    >
-                      {getValues("imageURL") && (
-                        <>
+                  {getValues("imageURL") && (
+                    <>
+                      <Box sx={{ width: "100%" }}>
+                        <IconButton
+                          color="primary"
+                          component="span"
+                          sx={{ m: "auto", width: "100%" }}
+                          onClick={handleDeleteImage}
+                        >
                           <ImageNotSupportedIcon
                             fontSize="large"
                             sx={{ mr: "10px" }}
                           />
                           <small>Удалить картинку</small>
-                        </>
-                      )}
-                    </IconButton>
-                  </Box>
+                        </IconButton>
+                      </Box>
+                    </>
+                  )}
                 </>
               )}
               {loadingProgress && (
