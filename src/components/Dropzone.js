@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import { Box } from "@mui/material";
 
 function Dropzone({ children, onFileDrop }) {
   const onDrop = useCallback((acceptedFiles) => {
@@ -14,7 +15,7 @@ function Dropzone({ children, onFileDrop }) {
   return (
     <div {...getRootProps()}>
       <input {...getInputProps()} />
-      {isDragActive ? <p>Бросай файл сюда ...</p> : <>{children}</>}
+      {isDragActive ? <Box>Бросай файл сюда ...</Box> : <Box>{children}</Box>}
     </div>
   );
 }

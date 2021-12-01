@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PropTypes from "prop-types";
@@ -113,22 +114,36 @@ function ChatMessages({ onSubmit }) {
   //         }
   // }
 
-  const handleDropFile = async (files) => {
-    const formData = new FormData();
-    formData.append("uploadedFile", files[0]);
-    setLoadingProgress(true);
+  const [imageFile, setImageFile] = useState("");
 
-    try {
-      const response = await api.post("/upload", formData);
-      result = response.data.fileURL;
-      console.log(result);
-      setValue("imageURL", result);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoadingProgress(false);
+  const handleDropFile = async (files) => {
+    if (imageFile === "") {
+      const formData = new FormData();
+      formData.append("uploadedFile", files[0]);
+      setLoadingProgress(true);
+      try {
+        const response = await api.post("/upload", formData);
+        result = response.data.fileURL;
+        setImageFile(result);
+        // setValue("imageURL", result);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoadingProgress(false);
+      }
     }
   };
+
+  const handleDeleteMessage = () => {
+    if (imageFile !== "") {
+      setImageFile("");
+    }
+  };
+
+  useEffect(() => {
+    setValue("imageURL", imageFile);
+    console.log(imageFile);
+  }, [imageFile]);
 
   const [position, setPosition] = useState("");
 
@@ -188,26 +203,62 @@ function ChatMessages({ onSubmit }) {
           >
             <Box sx={{ width: "60%" }}>
               {!loadingProgress && (
-                <Dropzone onFileDrop={handleDropFile}>
+                <>
+                  {!getValues("imageURL") && (
+                    <>
+                      <Dropzone onFileDrop={handleDropFile}>
+                        <Box sx={{ width: "100%" }}>
+                          <IconButton
+                            color="primary"
+                            aria-label="upload picture"
+                            component="span"
+                            sx={{ m: "auto", width: "100%" }}
+                          >
+                            <AddPhotoAlternateIcon
+                              fontSize="large"
+                              sx={{ mr: "10px" }}
+                            />
+                            <small>Загрузить картинку</small>
+                          </IconButton>
+                        </Box>
+                      </Dropzone>
+                    </>
+                  )}
                   <Box sx={{ width: "100%" }}>
                     <IconButton
                       color="primary"
                       aria-label="upload picture"
                       component="span"
                       sx={{ m: "auto", width: "100%" }}
+                      onClick={handleDeleteMessage}
                     >
-                      <PhotoCamera fontSize="large" sx={{ mr: "10px" }} />
                       {getValues("imageURL") && (
-                        <small>Картинка загружена</small>
+                        <>
+                          <ImageNotSupportedIcon
+                            fontSize="large"
+                            sx={{ mr: "10px" }}
+                          />
+                          <small>Удалить картинку</small>
+                        </>
                       )}
                     </IconButton>
                   </Box>
-                </Dropzone>
+                </>
               )}
               {loadingProgress && (
-                <div>
-                  <CircularProgressWithLabel value={progress} />
-                </div>
+                <Box sx={{ width: "100%", m: "auto" }}>
+                  <IconButton
+                    color="primary"
+                    aria-label="upload picture"
+                    component="span"
+                    sx={{ m: "auto", width: "100%" }}
+                  >
+                    <CircularProgressWithLabel
+                      sx={{ m: "auto", width: "100%" }}
+                      value={progress}
+                    />
+                  </IconButton>
+                </Box>
               )}
             </Box>
             {/* <input type="file" onChange={handleUploadFile}/> */}
